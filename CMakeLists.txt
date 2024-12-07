@@ -25,8 +25,8 @@ FetchContent_MakeAvailable(raylib)
 FetchContent_MakeAvailable(googletest)
 
 set(SOURCES 
-    src/main.cpp
     src/img/ppm.cpp
+    src/img/rgb_pixel.cpp
 )
 
 set(HEADERS
@@ -34,7 +34,7 @@ set(HEADERS
     src/img/rgb_pixel.hpp)
 
 # Add the executable for your project
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_executable(${PROJECT_NAME} src/main.cpp ${SOURCES} ${HEADERS})
 
 # Link Raylib to your project
 target_link_libraries(${PROJECT_NAME} raylib)
@@ -45,7 +45,7 @@ file(COPY test/test_files DESTINATION ${CMAKE_BINARY_DIR})
 add_executable(
   ppm_test
   test/ppm_test.cpp
-  src/img/ppm.cpp
+  ${SOURCES}
 )
 
 target_include_directories(ppm_test PRIVATE src/img)

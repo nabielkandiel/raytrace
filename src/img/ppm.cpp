@@ -50,7 +50,7 @@ bool ppm::writeImgFile(const std::string &filename) {
     std::clog << "\rScanlines remaining: " << (_rows - height) << ' '
               << std::flush;
     for (size_t width = 0; width < _cols; width++) {
-      outfile << _data[height][width].toString() << " ";
+      outfile << _data[height][width] << " ";
     }
     outfile << std::endl;
   }

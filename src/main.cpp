@@ -5,15 +5,15 @@
 
 int main() {
   SetTraceLogLevel(LOG_NONE);
-  InitWindow(800, 600, "Raylib Window");
-
-  while (!WindowShouldClose()) {
-    BeginDrawing();
-    ClearBackground(RAYWHITE);
-    DrawText("Hello, Raylib!", 190, 200, 20, LIGHTGRAY);
-    EndDrawing();
-  }
-
+  // InitWindow(800, 600, "Raylib Window");
+  /*
+    while (!WindowShouldClose()) {
+      BeginDrawing();
+      ClearBackground(RAYWHITE);
+      DrawText("Hello, Raylib!", 190, 200, 20, LIGHTGRAY);
+      EndDrawing();
+    }
+  */
   int image_width = 256;
   int image_height = 256;
   std::vector<std::vector<rgb_pixel>> data(
@@ -33,6 +33,6 @@ int main() {
   ppm img(image_height, image_width, std::move(data));
   img.writeImgFile("out.ppm");
 
-  CloseWindow();
+  // CloseWindow();
   return 0;
 }

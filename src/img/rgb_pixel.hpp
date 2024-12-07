@@ -7,9 +7,5 @@ struct rgb_pixel {
   size_t green;
   size_t blue;
 
-  std::string toString() {
-    std::stringstream ss;
-    ss << red << " " << green << " " << blue;
-    return ss.str();
-  }
+  friend std::ostream &operator<<(std::ostream &os, const rgb_pixel &obj);
 };
