@@ -1,4 +1,5 @@
 #include "ppm.hpp"
+#include "color.hpp"
 #include <fstream>
 #include <iostream>
 
@@ -13,7 +14,7 @@ ppm::ppm(const size_t rows, const size_t cols) {
   }
 }
 ppm::ppm(const size_t rows, const size_t cols,
-         const std::vector<std::vector<rgb_pixel>> &data) {
+         const std::vector<std::vector<Color<size_t>>> &data) {
   if (rows > 0 && rows == data.size() && cols == data[0].size()) {
     for (const auto &col : data) {
       if (col.size() != cols)
@@ -25,7 +26,7 @@ ppm::ppm(const size_t rows, const size_t cols,
   }
 }
 ppm::ppm(const size_t rows, const size_t cols,
-         const std::vector<std::vector<rgb_pixel>> &&data) {
+         const std::vector<std::vector<Color<size_t>>> &&data) {
   if (rows > 0 && rows == data.size() && cols == data[0].size()) {
     for (const auto &col : data) {
       if (col.size() != cols)

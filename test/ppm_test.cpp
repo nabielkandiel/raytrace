@@ -48,8 +48,8 @@ TEST(ppm_test, DefaultDataCheck) {
 TEST(ppm_test, MoveDataCheck) {
   int image_width = 256;
   int image_height = 256;
-  std::vector<std::vector<rgb_pixel>> data(
-      image_height, std::vector<rgb_pixel>(image_width, {0, 0, 0}));
+  std::vector<std::vector<Color<size_t>>> data(
+      image_height, std::vector<Color<size_t>>(image_width, {0, 0, 0}));
   for (int j = 0; j < image_height; j++) {
     for (int i = 0; i < image_width; i++) {
       auto r = double(i) / (image_width - 1);
@@ -75,9 +75,9 @@ TEST(ppm_test, MoveDataCheck) {
       size_t ir = int(255.999 * r);
       size_t ig = int(255.999 * g);
       size_t ib = int(255.999 * b);
-      EXPECT_EQ(test_data[j][i].red, ir);
-      EXPECT_EQ(test_data[j][i].green, ig);
-      EXPECT_EQ(test_data[j][i].blue, ib);
+      EXPECT_EQ(test_data[j][i].red(), ir);
+      EXPECT_EQ(test_data[j][i].green(), ig);
+      EXPECT_EQ(test_data[j][i].blue(), ib);
     }
   }
 }
@@ -85,8 +85,8 @@ TEST(ppm_test, MoveDataCheck) {
 TEST(ppm_test, WriteFileCheck) {
   int image_width = 256;
   int image_height = 256;
-  std::vector<std::vector<rgb_pixel>> data(
-      image_height, std::vector<rgb_pixel>(image_width, {0, 0, 0}));
+  std::vector<std::vector<Color<size_t>>> data(
+      image_height, std::vector<Color<size_t>>(image_width, {0, 0, 0}));
   for (int j = 0; j < image_height; j++) {
     for (int i = 0; i < image_width; i++) {
       auto r = double(i) / (image_width - 1);

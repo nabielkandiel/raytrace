@@ -1,10 +1,13 @@
 #include "img/ppm.hpp"
-#include "img/rgb_pixel.hpp"
-#include "raylib.h"
+#include "utility/color.hpp"
 #include <vector>
 
+namespace RL {
+#include "raylib.h"
+}
+
 int main() {
-  SetTraceLogLevel(LOG_NONE);
+  RL::SetTraceLogLevel(RL::LOG_NONE);
   // InitWindow(800, 600, "Raylib Window");
   /*
     while (!WindowShouldClose()) {
@@ -16,8 +19,8 @@ int main() {
   */
   int image_width = 256;
   int image_height = 256;
-  std::vector<std::vector<rgb_pixel>> data(
-      image_height, std::vector<rgb_pixel>(image_width, {0, 0, 0}));
+  std::vector<std::vector<util::Color<size_t>>> data(
+      image_height, std::vector<util::Color<size_t>>(image_width, {0, 0, 0}));
   for (int j = 0; j < image_height; j++) {
     for (int i = 0; i < image_width; i++) {
       auto r = double(i) / (image_width - 1);

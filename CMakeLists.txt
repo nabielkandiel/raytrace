@@ -24,14 +24,17 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(raylib)
 FetchContent_MakeAvailable(googletest)
 
+include_directories(src/utility)
+
 set(SOURCES 
     src/img/ppm.cpp
-    src/img/rgb_pixel.cpp
 )
 
 set(HEADERS
     src/img/ppm.hpp
-    src/img/rgb_pixel.hpp)
+    src/utility/vec3.hpp
+    src/utility/color.hpp
+)
 
 # Add the executable for your project
 add_executable(${PROJECT_NAME} src/main.cpp ${SOURCES} ${HEADERS})
@@ -43,17 +46,19 @@ target_link_libraries(${PROJECT_NAME} raylib)
 file(COPY test/test_files DESTINATION ${CMAKE_BINARY_DIR})
 
 add_executable(
-  ppm_test
+  rt_test
   test/ppm_test.cpp
+  test/color_test.cpp
+  test/vec3_test.cpp
   ${SOURCES}
 )
 
-target_include_directories(ppm_test PRIVATE src/img)
+target_include_directories(rt_test PRIVATE src/img src/utility)
 
 target_link_libraries(
-  ppm_test
+  rt_test
   GTest::gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(ppm_test)
+gtest_discover_tests(rt_test)
