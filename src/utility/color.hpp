@@ -4,8 +4,9 @@
 #include <limits>
 #include <ostream>
 #include <stdexcept>
+#include <stdint.h>
 
-namespace util {
+namespace Util {
 
 template <typename T> class Color {
 public:
@@ -123,4 +124,4 @@ public:
 private:
   std::array<T, 3> _data;
 };
-} // namespace util
+} // namespace Util

@@ -1,7 +1,7 @@
 #include "color.hpp"
 #include <gtest/gtest.h>
 
-using util::Color;
+using Util::Color;
 
 // Test default constructor
 TEST(ColorTest, DefaultConstructor) {

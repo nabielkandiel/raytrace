@@ -2,8 +2,9 @@
 
 #include <array>
 #include <ostream>
+#include <stdint.h>
 
-namespace util {
+namespace Util {
 
 template <typename T> class Vec3 {
 public:
@@ -15,13 +16,31 @@ public:
     return os;
   }
 
-  Vec3<T> operator+(Vec3<T> const &other) {
+  Vec3<T> operator+(Vec3<T> const &other) const {
     return Vec3<T>{_data[0] + other[0], _data[1] + other[1],
                    _data[2] + other[2]};
   }
 
-  Vec3<T> operator-(Vec3<T> const &other) {
+  Vec3<T> operator-(Vec3<T> const &other) const {
     return Vec3{_data[0] - other[0], _data[1] - other[1], _data[2] - other[2]};
+  }
+
+  Vec3<T> operator*(Vec3<T> const &other) const {
+    return Vec3<T>{_data[0] * other[0], _data[1] * other[1],
+                   _data[2] * other[2]};
+  }
+
+  Vec3<T> operator*(T const &other) const {
+    return Vec3{_data[0] * other, _data[1] * other, _data[2] * other};
+  }
+
+  Vec3<T> operator/(Vec3<T> const &other) const {
+    return Vec3<T>{_data[0] / other[0], _data[1] / other[1],
+                   _data[2] / other[2]};
+  }
+
+  Vec3<T> operator/(T const &other) const {
+    return Vec3{_data[0] / other, _data[1] / other, _data[2] / other};
   }
 
   Vec3<T> &operator+=(const Vec3<T> &other) {
@@ -87,4 +106,14 @@ public:
 private:
   std::array<T, 3> _data;
 };
-} // namespace util
+
+template <typename T>
+constexpr bool operator==(const Vec3<T> &lhs, const Vec3<T> &rhs) {
+  if (lhs[0] == rhs[0] && lhs[1] == rhs[1] && lhs[2] == rhs[2])
+    return true;
+  return false;
+}
+template <typename T> Vec3<T> operator*(const T &scalar, const Vec3<T> &vec) {
+  return vec * scalar;
+}
+} // namespace Util

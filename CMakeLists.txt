@@ -32,6 +32,7 @@ set(SOURCES
 
 set(HEADERS
     src/img/ppm.hpp
+    src/img/ray.hpp
     src/utility/vec3.hpp
     src/utility/color.hpp
 )
@@ -50,6 +51,7 @@ add_executable(
   test/ppm_test.cpp
   test/color_test.cpp
   test/vec3_test.cpp
+  test/ray_test.cpp
   ${SOURCES}
 )
 

@@ -1,7 +1,7 @@
 #include "vec3.hpp"
 #include <gtest/gtest.h>
 
-using util::Vec3;
+using Util::Vec3;
 
 // Test default constructor
 TEST(Vec3Test, DefaultConstructor) {
@@ -55,6 +55,48 @@ TEST(Vec3Test, SubtractionOperatorNegative) {
   EXPECT_EQ(result[0], -50);
   EXPECT_EQ(result[1], -25);
   EXPECT_EQ(result[2], -15);
+}
+
+// Test multiplication with another vec3
+TEST(Vec3Test, multiplyOtherVec) {
+  Vec3<int> Vec31(2, 3, 4);
+  Vec3<int> Vec32(1, 2, 3);
+  Vec3<int> result = Vec31 * Vec32;
+  EXPECT_EQ(result[0], 2);
+  EXPECT_EQ(result[1], 6);
+  EXPECT_EQ(result[2], 12);
+}
+
+// Test multiplication with scalor
+TEST(Vec3Test, multiplyScalor) {
+  Vec3<int> Vec31(50, 25, 10);
+  Vec3<int> result = Vec31 * 3;
+  EXPECT_EQ(result[0], 150);
+  EXPECT_EQ(result[1], 75);
+  EXPECT_EQ(result[2], 30);
+  Vec3<int> result2 = 3 * Vec31;
+  EXPECT_EQ(result2[0], 150);
+  EXPECT_EQ(result2[1], 75);
+  EXPECT_EQ(result2[2], 30);
+}
+
+// Test division with another vec3
+TEST(Vec3Test, divideOtherVec) {
+  Vec3<int> Vec31(2, 4, 6);
+  Vec3<int> Vec32(1, 2, 3);
+  Vec3<int> result = Vec31 / Vec32;
+  EXPECT_EQ(result[0], 2);
+  EXPECT_EQ(result[1], 2);
+  EXPECT_EQ(result[2], 2);
+}
+
+// Test division with scalor
+TEST(Vec3Test, divideScalor) {
+  Vec3<int> Vec31(50, 25, 10);
+  Vec3<int> result = Vec31 / 5;
+  EXPECT_EQ(result[0], 10);
+  EXPECT_EQ(result[1], 5);
+  EXPECT_EQ(result[2], 2);
 }
 
 // test += with other Vec3
@@ -185,4 +227,13 @@ TEST(Vec3Test, StreamOutputOperator) {
   std::ostringstream os;
   os << Vec3;
   EXPECT_EQ(os.str(), "10 20 30");
+}
+
+// Test == operatot
+TEST(Vec3Test, testEqual) {
+  Vec3<int> v1(20, 40, 60);
+  Vec3<int> v2(20, 40, 60);
+  Vec3<int> v3(22, 40, 60);
+  EXPECT_TRUE(v1 == v2);
+  EXPECT_FALSE(v2 == v3);
 }

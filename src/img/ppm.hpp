@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-using util::Color;
+using Util::Color;
 
 class ppm {
 public:
