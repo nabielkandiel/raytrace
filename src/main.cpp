@@ -1,4 +1,5 @@
 #include "img/ppm.hpp"
+#include "img/ray.hpp"
 #include "utility/color.hpp"
 #include "utility/vec3.hpp"
 #include <algorithm>
@@ -7,6 +8,10 @@
 
 namespace RL {
 #include "raylib.h"
+}
+
+Util::Color<double> ray_color(const Ray<double> &r) {
+  return Util::Color<double>(0, 0, 0);
 }
 
 int main() {
@@ -21,9 +26,9 @@ int main() {
     }
   */
   constexpr double aspect_ration = 16.0 / 9.0;
-  int image_width = 400;
-  int image_height = static_cast<int>(image_width / aspect_ration);
-  image_height = std::clamp(image_height, 1, std::numeric_limits<int>::max());
+  size_t image_width = 400;
+  size_t image_height = static_cast<int>(image_width / aspect_ration);
+  image_height = (image_height < 1) ? 1 : image_height;
 
   // camera
   constexpr double focal_length = 1.0;
@@ -45,21 +50,18 @@ int main() {
                              viewport_u / 2 - viewport_v / 2;
   auto pixel00_loc = viewport_upper_left + .5 * (pixel_delta_u + pixel_delta_v);
 
-  std::vector<std::vector<Util::Color<size_t>>> data(
-      image_height, std::vector<Util::Color<size_t>>(image_width, {0, 0, 0}));
+  std::vector<std::vector<Util::Color<double>>> data(
+      image_height, std::vector<Util::Color<double>>(image_width, {0, 0, 0}));
   for (int j = 0; j < image_height; j++) {
     for (int i = 0; i < image_width; i++) {
-      auto r = double(i) / (image_width - 1);
-      auto g = double(j) / (image_height - 1);
-      auto b = 0.0;
-
-      size_t ir = int(255.999 * r);
-      size_t ig = int(255.999 * g);
-      size_t ib = int(255.999 * b);
-      data[j][i] = {ir, ig, ib};
+      auto pixel_center =
+          pixel00_loc + (pixel_delta_u * i) + (pixel_delta_v * j);
+      auto ray_dir = pixel_center - cam_center;
+      Ray<double> r(cam_center, ray_dir);
+      data[j][i] = ray_color(r);
     }
   }
-  ppm img(image_height, image_width, std::move(data));
+  ppm<double> img(image_height, image_width, std::move(data));
   img.writeImgFile("out.ppm");
 
   // CloseWindow();

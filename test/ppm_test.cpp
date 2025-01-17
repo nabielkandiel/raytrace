@@ -37,7 +37,7 @@ bool areFilesEqual(const std::string &file1, const std::string &file2) {
 }
 
 TEST(ppm_test, DefaultDataCheck) {
-  ppm def(5, 10);
+  ppm<size_t> def(5, 10);
   EXPECT_EQ(def.getRows(), 5);
   EXPECT_EQ(def.getCols(), 10);
   const auto &data = def.getData();
@@ -62,7 +62,7 @@ TEST(ppm_test, MoveDataCheck) {
       data[j][i] = {ir, ig, ib};
     }
   }
-  ppm image(image_height, image_width, std::move(data));
+  ppm<size_t> image(image_height, image_width, std::move(data));
   EXPECT_EQ(image.getRows(), image_height);
   EXPECT_EQ(image.getCols(), image_width);
   const auto &test_data = image.getData();
@@ -99,7 +99,7 @@ TEST(ppm_test, WriteFileCheck) {
       data[j][i] = {ir, ig, ib};
     }
   }
-  ppm image(image_height, image_width, std::move(data));
+  ppm<size_t> image(image_height, image_width, std::move(data));
   image.writeImgFile("test_files/TEST.ppm");
   ASSERT_TRUE(areFilesEqual("test_files/TEST.ppm", "test_files/CONTROL.ppm"))
       << "Files should be equal but they are not!";
