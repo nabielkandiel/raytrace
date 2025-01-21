@@ -128,6 +128,10 @@ public:
 
   T operator[](int idx) const { return _data[idx]; }
 
+  Color<size_t> getColorForPPM() {
+    return Color<size_t>(static_cast<size_t>(_data[0]),static_cast<size_t>(_data[1]),static_cast<size_t>(_data[2]));
+  }
+
 private:
   std::array<T, 3> _data;
 };

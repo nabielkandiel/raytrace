@@ -66,7 +66,7 @@ int main() {
       auto ray_dir = pixel_center - cam_center;
       Ray<double> r(cam_center, ray_dir);
       auto r_color = ray_color(r)*255.99;
-      data[j][i] = Color<size_t>(static_cast<size_t>(r_color[0]), static_cast<size_t>(r_color[1]), static_cast<size_t>(r_color[2]) );
+      data[j][i] = r_color.getColorForPPM();
     }
   }
   ppm img(image_height, image_width, std::move(data));
