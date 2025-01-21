@@ -107,6 +107,13 @@ public:
     return *this;
   }
 
+  template <typename U> Color<T> operator*(const U &other) {
+    if (other < 0) {
+      throw std::runtime_error("Negative values not allowed");
+    }
+    return Color<T>(_data[0] *= other, _data[1] *= other, _data[2] *= other);
+  }
+
   template <typename U> Color<T> &operator/=(const U &other) {
     if (other < 0) {
       throw std::runtime_error("Negative value not allowed");
@@ -124,4 +131,10 @@ public:
 private:
   std::array<T, 3> _data;
 };
+
+template <typename T> Color<T>& operator*(const T &scalar, Color<T> &color) {
+  color*=scalar;
+  return color;
+}
+
 } // namespace Util

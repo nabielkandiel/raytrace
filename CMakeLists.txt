@@ -1,4 +1,9 @@
 cmake_minimum_required(VERSION 3.14)
+
+set(CMAKE_C_COMPILER /usr/bin/clang)
+set(CMAKE_CXX_COMPILER /usr/bin/clang++)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 project(raytrace)
 enable_testing()
 # Specify the C++ standard
@@ -6,8 +11,6 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_BUILD_TYPE Debug)
 cmake_policy(SET CMP0135 NEW)
-
-
 # Pull Raylib using FetchContent
 include(FetchContent)
 

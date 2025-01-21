@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <cmath>
 #include <ostream>
 #include <stdint.h>
 
@@ -8,6 +9,7 @@ namespace Util {
 
 template <typename T> class Vec3 {
 public:
+  // x [0], y [1], z [2]
   Vec3() : _data{0, 0, 0} {};
   Vec3(T a, T b, T c) : _data{a, b, c} {};
 
@@ -116,4 +118,12 @@ constexpr bool operator==(const Vec3<T> &lhs, const Vec3<T> &rhs) {
 template <typename T> Vec3<T> operator*(const T &scalar, const Vec3<T> &vec) {
   return vec * scalar;
 }
+
+template <typename T>
+Vec3<T> make_unit(Vec3<T> vec) {
+  T squared = (vec[0]*vec[0]) + (vec[1]*vec[1]) + (vec[2]*vec[2]);
+  T mag = std::sqrt(squared);
+  return (vec/mag);
+}
+
 } // namespace Util

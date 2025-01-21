@@ -4,6 +4,7 @@
 #include "utility/vec3.hpp"
 #include <algorithm>
 #include <stdint.h>
+#include <sys/types.h>
 #include <vector>
 
 namespace RL {
@@ -11,7 +12,13 @@ namespace RL {
 }
 
 Util::Color<double> ray_color(const Ray<double> &r) {
-  return Util::Color<double>(0, 0, 0);
+  Util::Vec3<double> unit_dir(Util::make_unit(r.direction()));
+  auto a = .5*(unit_dir[1] + 1.0);
+  Color<double> unit(1.0, 1.0, 1.0);
+  unit *= (1.0-a);
+  Color<double> c(.5, .7, 1.0); 
+  c*= a;
+  return unit + c;
 }
 
 int main() {
@@ -50,18 +57,19 @@ int main() {
                              viewport_u / 2 - viewport_v / 2;
   auto pixel00_loc = viewport_upper_left + .5 * (pixel_delta_u + pixel_delta_v);
 
-  std::vector<std::vector<Util::Color<double>>> data(
-      image_height, std::vector<Util::Color<double>>(image_width, {0, 0, 0}));
+  std::vector<std::vector<Util::Color<size_t>>> data(
+      image_height, std::vector<Util::Color<size_t>>(image_width, {0, 0, 0}));
   for (int j = 0; j < image_height; j++) {
     for (int i = 0; i < image_width; i++) {
       auto pixel_center =
           pixel00_loc + (pixel_delta_u * i) + (pixel_delta_v * j);
       auto ray_dir = pixel_center - cam_center;
       Ray<double> r(cam_center, ray_dir);
-      data[j][i] = ray_color(r);
+      auto r_color = ray_color(r)*255.99;
+      data[j][i] = Color<size_t>(static_cast<size_t>(r_color[0]), static_cast<size_t>(r_color[1]), static_cast<size_t>(r_color[2]) );
     }
   }
-  ppm<double> img(image_height, image_width, std::move(data));
+  ppm img(image_height, image_width, std::move(data));
   img.writeImgFile("out.ppm");
 
   // CloseWindow();

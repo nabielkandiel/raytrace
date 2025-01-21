@@ -1,7 +1,6 @@
 #pragma once
 #include "color.hpp"
 #include <cstddef>
-#include <cstdint>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -9,7 +8,7 @@
 
 using Util::Color;
 
-template <typename T> class ppm {
+class ppm {
 public:
   ppm(const size_t rows, const size_t cols) {
     if (rows == 0 || cols == 0)
@@ -22,7 +21,7 @@ public:
     }
   }
   ppm(const size_t rows, const size_t cols,
-      const std::vector<std::vector<Color<T>>> &data) {
+      const std::vector<std::vector<Color<size_t>>> &data) {
     if (rows > 0 && rows == data.size() && cols == data[0].size()) {
       for (const auto &col : data) {
         if (col.size() != cols)
@@ -34,7 +33,7 @@ public:
     }
   }
   ppm(const size_t rows, const size_t cols,
-      const std::vector<std::vector<Color<T>>> &&data) {
+      const std::vector<std::vector<Color<size_t>>> &&data) {
     if (rows > 0 && rows == data.size() && cols == data[0].size()) {
       for (const auto &col : data) {
         if (col.size() != cols)
@@ -46,7 +45,7 @@ public:
     }
   }
 
-  const std::vector<std::vector<Color<T>>> &getData() const { return _data; }
+  const std::vector<std::vector<Color<size_t>>> &getData() const { return _data; }
   size_t getRows() { return _rows; }
   size_t getCols() { return _cols; }
 
@@ -75,5 +74,5 @@ public:
 private:
   size_t _cols = 0;
   size_t _rows = 0;
-  std::vector<std::vector<Color<T>>> _data;
+  std::vector<std::vector<Color<size_t>>> _data;
 };
